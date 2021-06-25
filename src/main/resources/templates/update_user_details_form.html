@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge" />-->
+    <title>Title</title>
+
+    <link th:href="@{/css/form.css}" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <form action="updateEditedUserDetails" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" th:value="${userDetails.name}" class="form-control" placeholder="Enter Name"/>
+            </div>
+
+            <input type="hidden" name="oldEmail" th:value="${userDetails.email}">
+
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" th:value="${userDetails.email}" type="email" placeholder="Enter Email"/>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="text" th:value="${userDetails.phone}" placeholder="Enter Phone"/>
+
+            </div>
+
+            <div class="form-group">
+                <label for="state">State</label>
+                <input id="state" name="state" type="text" th:value="${userDetails.state}" placeholder="Enter State"/>
+            </div>
+
+
+
+            <div class="form-group">
+                <p>Gender</p>
+                <div th:switch="${userDetails.gender}">
+                    <div th:case="'male'">
+                        <div class="form-check">
+                            <input class="form-check-input" name="gender" type="radio" value="male" id="option1" checked>
+                            <label class="form-check-label" for="option1">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" value="female" id="option2">
+                            <label class="form-check-label" for="option2">Female</label>
+                        </div>
+
+                    </div>
+                    <div th:case="'female'">
+                        <div class="form-check">
+                            <input class="form-check-input" name="gender" type="radio" value="male" id="option3">
+                            <label class="form-check-label" for="option3">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gender" value="female" id="option4" checked>
+                            <label class="form-check-label" for="option4">Female</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <p>Skills</p>
+                <select name="skills" class="form-select"  aria-label="Default select example" multiple="multiple">
+                    <option value="Java" th:selected="${#lists.contains(allSkills,'Java')}">Java</option>
+                    <option value="Spring Boot" th:selected="${#lists.contains(allSkills,'Spring Boot')}">Spring Boot</option>
+                    <option value="Javascript" th:selected="${#lists.contains(allSkills,'Javascript')}">Javascript</option>
+                    <option value="MySql" th:selected="${#lists.contains(allSkills,'MySql')}">MySql</option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <img th:src="${image}" class="img-rounded">
+                <!--<img th:src="${image}"/>-->
+                <label class="form-label" for="customFile">Photo</label>
+                <input name="updateimage"  type="file"  class="form-control" id="customFile" accept="image/png, image/jpeg" required/>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+
+        </form>
+
+    </div>
+
+
+</body>
+</html>
