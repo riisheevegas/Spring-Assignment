@@ -1,6 +1,8 @@
 package com.rishi.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,6 +11,7 @@ import lombok.*;
 @Table(name="form_details")
 public class FormDetails {
 	@Id
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String name;
 	private String email;
 	private String mobile;

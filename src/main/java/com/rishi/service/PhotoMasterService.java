@@ -19,7 +19,7 @@ public class PhotoMasterService {
 	    public PhotoFile addFileMaster(String fileName,String userDeatilsEmail)
 	    {
 	        PhotoFile photFile=new PhotoFile();
-	        photFile.setFileDirectory("/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/Spring-Assign/src/main/resources/static/images"+fileName);
+	        photFile.setFileDirectory("/home/extramarks/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/Spring-Assign/src/main/resources/static/images/"+fileName);
 	        photFile.setCreated_at(LocalDateTime.now());
 	        photFile.setUpdated_at(null);
 	        photFile.setDeleted_at(null);

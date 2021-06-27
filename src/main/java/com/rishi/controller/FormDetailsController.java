@@ -89,7 +89,7 @@ public class FormDetailsController {
 	    }
 
 	    @PostMapping("/addUserDetails")
-	    public ModelAndView addUserDetails(@ModelAttribute @Valid FormDetailsSKill userDetailsAndSkills, @RequestParam("image") MultipartFile multipartFile, ModelAndView modelAndView, Errors result)
+	    public ModelAndView addUserDetails(@ModelAttribute @Valid FormDetailsSKill formDetailsAndSkills, @RequestParam("image") MultipartFile multipartFile, ModelAndView modelAndView, Errors result)
 
 	    {
 	        try {
@@ -100,16 +100,16 @@ public class FormDetailsController {
 	               throw new Exception(result.toString());
 	            }
 	            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-	            for (String skill : userDetailsAndSkills.getSkills()) {
-	                UserSkills currSkill = skillService.addSkill(skill, userDetailsAndSkills.getEmail());
+	            for (String skill : formDetailsAndSkills.getSkills()) {
+	                UserSkills currSkill = skillService.addSkill(skill, formDetailsAndSkills.getEmail());
 	                skillService.addSkill(currSkill);
 	            }
-	            modelAndView.addObject("userDetailsAndSkills", userDetailsAndSkills);
-	            Files.copy(multipartFile.getInputStream(), Paths.get("/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/Spring-Assign/src/main/resources/static/images/" + fileName), StandardCopyOption.REPLACE_EXISTING);
-	            PhotoFile fileMaster = fileMasterService.addFileMaster(fileName, userDetailsAndSkills.getEmail());
+	            modelAndView.addObject("formDetailsAndSkills", formDetailsAndSkills);
+	            Files.copy(multipartFile.getInputStream(), Paths.get("/home/extramarks/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/Spring-Assign/src/main/resources/static/images/" + fileName), StandardCopyOption.REPLACE_EXISTING);
+	            PhotoFile fileMaster = fileMasterService.addFileMaster(fileName, formDetailsAndSkills.getEmail());
 	            fileMasterService.addFileMaster(fileMaster);
-	            userDetailsAndSkills.setPhotos("http://localhost:8080/getfile/" + String.valueOf(fileMaster.getId()));
-	            userDetailsService.addUserDetails(userDetailsAndSkills.getFormDetails());
+	            formDetailsAndSkills.setPhotos("http://localhost:8080/getfile/" + String.valueOf(fileMaster.getId()));
+	            userDetailsService.addUserDetails(formDetailsAndSkills.getFormDetails());
 	            modelAndView.addObject("image", "http://localhost:8080/getfile/" + String.valueOf(fileMaster.getId()));
 	            modelAndView.setViewName("user_details_success");
 	            return modelAndView;
@@ -136,7 +136,7 @@ public class FormDetailsController {
 	    }
 
 	    @PostMapping("/updateEditedUserDetails")
-	    public ModelAndView updateEditedUserDetails( @ModelAttribute @Valid FormDetailsSKill userDetailsAndSkills
+	    public ModelAndView updateEditedUserDetails( @ModelAttribute @Valid FormDetailsSKill formDetailsAndSkills
 	            , @RequestParam("oldEmail") String oldEmail
 	            , @RequestParam("updateimage") MultipartFile multipartFile, ModelAndView modelAndView
 	            , Errors result)
@@ -150,19 +150,19 @@ public class FormDetailsController {
 	                throw new Exception(result.toString());
 	            }
 	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-	        System.out.println(userDetailsAndSkills+" "+oldEmail+fileName);
-	        for(String skill:userDetailsAndSkills.getSkills())
+	        System.out.println(formDetailsAndSkills+" "+oldEmail+fileName);
+	        for(String skill:formDetailsAndSkills.getSkills())
 	        {
-	            UserSkills currSkill=skillService.addSkill(skill,userDetailsAndSkills.getEmail());
+	            UserSkills currSkill=skillService.addSkill(skill,formDetailsAndSkills.getEmail());
 	            skillService.updateSkill(oldEmail,currSkill);
 	        }
 	        modelAndView.setViewName("user_details_success");
-	        modelAndView.addObject("userDetailsAndSkills",userDetailsAndSkills);
-	        Files.copy(multipartFile.getInputStream(), Paths.get("/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/Spring-Assign/src/main/resources/static/images/"+fileName), StandardCopyOption.REPLACE_EXISTING);
-	        PhotoFile fileMaster=fileMasterService.addFileMaster(fileName,userDetailsAndSkills.getEmail());
+	        modelAndView.addObject("formDetailsAndSkills",formDetailsAndSkills);
+	        Files.copy(multipartFile.getInputStream(), Paths.get("/home/extramarks/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/Spring-Assign/src/main/resources/static/images/"+fileName), StandardCopyOption.REPLACE_EXISTING);
+	        PhotoFile fileMaster=fileMasterService.addFileMaster(fileName,formDetailsAndSkills.getEmail());
 	        fileMasterService.updateFileMaster(oldEmail,fileMaster);
-	        userDetailsAndSkills.setPhotos("http://localhost:8080/getfile/"+String.valueOf(fileMaster.getId()));
-	        userDetailsService.updateUserDetails(oldEmail,userDetailsAndSkills.getFormDetails());
+	        formDetailsAndSkills.setPhotos("http://localhost:8080/getfile/"+String.valueOf(fileMaster.getId()));
+	        userDetailsService.updateUserDetails(oldEmail,formDetailsAndSkills.getFormDetails());
 	        modelAndView.addObject("image","http://localhost:8080/getfile/"+String.valueOf(fileMaster.getId()));
 	        return modelAndView;
 	        }
